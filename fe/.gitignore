@@ -1,0 +1,19 @@
+# Node modules
+be/node_modules/
+fe/node_modules/
+
+# Build / dist
+be/dist/
+fe/dist/
+
+# Env
+be/.env
+fe/.env
+
+# Thư viện icon/font (nếu bạn dùng local)
+fe/bootstrap-icons-*/
+fe/fontawesome-*/
+
+# OS
+.DS_Store
+Thumbs.db

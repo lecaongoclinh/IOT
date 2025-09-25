@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LCNL - Dashboard IoT</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+   .card {
+      border-radius: 15px;
+      padding: 20px;
+      color: #E91E63 ;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+      color: #E91E63;
+    }
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #E91E63;
+      color: #E91E63 ;
+    }
+    .btn-outline-pink {
+      color: #E91E63;
+      border-color: #E91E63;
+    }
+    .btn-outline-pink:hover {
+      background-color: #E91E63;
+      color: #fff;
+    }
+    .page-item.active .page-link {
+      background-color: #E91E63;
+      border-color: #E91E63;
+    }
+    ::placeholder {
+    color: #E91E63; /* Màu hồng đậm bạn yêu cầu */
+       /* Đảm bảo màu không bị nhạt */
+   }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  
+  <div class="sidebar">
+    <div class="logo">
+      <i class="bi bi-emoji-cat-fill"></i>
+      <p>LCNL</p>
+    </div>
+    
+    <ul class="nav flex-column w-100">
+      <li class="nav-item">
+        <a class="nav-link" href="Dashboard.html">
+          <i class="bi bi-house me-2"></i> Trang chủ
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="Data.html">
+          <i class="bi bi-thermometer-half me-2"></i> Cảm biến
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ActionHistory.html">
+          <i class="bi bi-hdd-stack me-2"></i> Thiết bị
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Profile.html">
+          <i class="bi bi-person-circle me-2"></i> Hồ sơ
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="main-content" style="margin-left: 160px; color: #E91E63;">
+  <div class="card shadow-sm p-4">
+    <h5 class="mb-4" style="color: #E91E63;">Dữ liệu cảm biến</h5>
+
+    <!-- Search & Sort -->
+    <div class="container mt-4 mb-3" style="margin-top: 0px;">
+      <form class="d-flex align-items-center flex-wrap gap-2">
+        <!-- Label -->
+        <label for="searchInput"  class="form-label fw-bold mb-0 me-2" style="color: #E91E63;">Tìm kiếm:</label>
+        
+        <!-- Ô tìm kiếm -->
+        <input type="text" class="form-control" id="searchInput" placeholder="Nhập từ khóa..."
+               style="max-width: 250px; color: #E91E63;">
+
+        <!-- Select loại dữ liệu -->
+        <select class="form-select" id="filterSelect"
+                style="max-width: 150px; color: #E91E63;">
+          <option value="all" selected>Tất cả</option>
+          <option value="temperature">Nhiệt độ</option>
+          <option value="humidity">Độ ẩm</option>
+          <option value="light">Ánh sáng</option>
+          <option value="time">Thời gian</option>
+        </select>
+
+        <!-- Select sắp xếp -->
+        <select class="form-select" id="sortSelect"
+                style="max-width: 200px; color: #E91E63;">
+          <option selected>Sắp xếp</option>
+          <option value="ASC">Tăng dần</option>
+          <option value="DESC">Giảm dần</option>
+        </select>
+
+        <!-- Nút áp dụng -->
+        <button class="btn btn-apply ms-2" id="applyBtn" type="submit" style="background-color: #E91E63; color: white;">
+          Áp dụng
+        </button>
+      </form>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive" id="sensorTable">
+      <table class="table table-bordered text-center" style="color: #E91E63;">
+        <thead style="color: #E91E63;">
+          <tr>
+            <th>ID</th>
+            <th>Nhiệt độ</th>
+            <th>Độ ẩm</th>
+            <th>Ánh sáng</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+   <div class="d-flex justify-content-between align-items-center mt-3">
+      <select class="form-select" id="limitSelect" style="max-width: 120px; color: #E91E63;">
+        <option value="5">5/trang</option>
+        <option value="10">10/trang</option>
+        <option value="20">20/trang</option>
+        <option value="30">30/trang</option>
+      </select>
+      <nav>
+        <ul class="pagination mb-0" style="--bs-pagination-hover-bg: #ffe5e5;" id="pagination">
+          <li class="page-item disabled">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">«</a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link page-animate" href="#" style="background-color: #E91E63; border-color: #E91E63;">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">2</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">3</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">»</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+  
+</div>
+
+<script>
+
+
+
+</script>
+<!-- jQuery (yêu cầu) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap Select JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+<script src="js/data.js"></script>
+</body>
+</html>

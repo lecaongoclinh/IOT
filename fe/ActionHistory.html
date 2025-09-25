@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LCNL - Dashboard IoT</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+   .card {
+      border-radius: 15px;
+      padding: 20px;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+      color: #E91E63 ;
+    }
+    .form-control:focus {
+      box-shadow: none;
+      color: #E91E63;
+      border-color: #E91E63;
+    }
+    .max-size-page {
+      color: #E91E63;
+      border-color: #E91E63;
+    }
+    .btn-outline-pink:hover {
+      background-color: #E91E63;
+      color: #fff;
+    }
+    input::placeholder,
+  textarea::placeholder {
+    color: #E91E63;
+    opacity: 1;
+  }
+
+  </style>
+</head>
+<body>
+
+<div class="container-fluid" style="gap: 0;">
+  
+  <div class="sidebar">
+    <div class="logo">
+      <i class="bi bi-emoji-cat-fill"></i>
+      <p>LCNL</p>
+    </div>
+    
+    <ul class="nav flex-column w-100">
+      <li class="nav-item">
+        <a class="nav-link" href="Dashboard.html">
+          <i class="bi bi-house me-2"></i> Trang chủ
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Data.html">
+          <i class="bi bi-thermometer-half me-2"></i> Cảm biến
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="ActionHistory.html">
+          <i class="bi bi-hdd-stack me-2"></i> Thiết bị
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Profile.html">
+          <i class="bi bi-person-circle me-2"></i> Hồ sơ
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="main-content" style="margin-left: 160px;">
+  <div class="card shadow-sm p-4">
+    <h5 class="mb-4" style="color: #E91E63;">Lịch sử hoạt động</h5>
+
+    <!-- Search & Sort -->
+    <div class="container mt-4 mb-3">
+      <form class="d-flex align-items-center flex-wrap gap-2">
+        <!-- Label -->
+        <label for="searchInput" class="form-label fw-bold mb-0 me-2" style="color: #E91E63;">Tìm kiếm:</label>
+        
+        <!-- Ô tìm kiếm -->
+        <input type="text" id="searchInput" class="form-control" id="searchInput" placeholder="Nhập từ khóa..." style="max-width: 250px; color: #E91E63;">
+
+        <!-- Select loại dữ liệu -->
+       <!-- Select lọc thiết bị -->
+      <select class="form-select custom-select me-2" id="filterSelect" style="max-width: 150px;" id="filterSelect">
+        <option value="all" selected>Tất cả</option>
+        <option value="1">Bóng đèn</option>
+        <option value="2">Điều hòa</option>
+        <option value="3">Quạt</option>
+        <option value="time">Thời gian</option>
+      </select>
+
+      <!-- Select sắp xếp -->
+      <select class="form-select custom-select" id="sortSelect" style="max-width: 200px;" id="sortSelect">
+        <option selected>Sắp xếp</option>
+        <option value="asc">Thời gian tăng dần</option>
+        <option value="desc">Thời gian giảm dần</option>
+      </select>
+
+
+        <!-- Nút áp dụng -->
+        <button class="btn btn-apply ms-2" type="submit" style="background-color: #E91E63; color: white;" id="applyBtn">
+          Áp dụng
+        </button>
+      </form>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive" style="color: #E91E63;">
+      <table class="table table-bordered text-center" style="color: #E91E63;" id="actionTable">
+        <thead style="color: #E91E63;">
+          <tr>
+            <th>ID</th>
+            <th>Thiết bị</th>
+            <th>Hoạt động</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <tbody style="color: #E91E63;">
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+  <select class="form-select" id="limitSelect" style="max-width: 120px; color: #E91E63;">
+    <option value="5">5/trang</option>
+    <option value="10">10/trang</option>
+    <option value="20">20/trang</option>
+    <option value="30">30/trang</option>
+  </select>
+  <nav>
+    <ul class="pagination mb-0" style="--bs-pagination-hover-bg: #ffe5e5;" id="pagination">
+      <li class="page-item disabled">
+        <a class="page-link page-animate" href="#" style="color: #E91E63;">«</a>
+      </li>
+      <li class="page-item active">
+        <a class="page-link page-animate" href="#" style="background-color: #E91E63; border-color: #E91E63;">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link page-animate" href="#" style="color: #E91E63;">2</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link page-animate" href="#" style="color: #E91E63;">3</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link page-animate" href="#" style="color: #E91E63;">»</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
+  </div>
+</div>
+
+
+  </div>
+  
+</div>
+
+<script>
+  
+</script>
+<!-- jQuery (yêu cầu) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap Select JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+<script src="js/action_history.js"></script>
+</body>
+</html>

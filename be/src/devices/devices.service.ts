@@ -28,9 +28,8 @@ export class DevicesService {
         throw new Error('Thiết bị không tồn tại');
     }
 
-    // Lưu lịch sử
     const history = this.historyRepo.create({ deviceId, action });
-    await this.historyRepo.save(history);
+    // await this.historyRepo.save(history);
     console.log('💾 Action history saved:', history);
 
     const payload = {};
@@ -40,6 +39,12 @@ export class DevicesService {
     try {
         const result = await this.sendCommandAndWaitAck(payload, `led${deviceId}`);
         console.log('📥 ESP32 response:', result);
+
+        //Lưu lịch sử vào database
+        if (result.status === 'ok') {
+            await this.historyRepo.save(history);
+            console.log('💾 Action history saved after ACK:', history);
+        }
         return { success: result.status === 'ok', deviceId, action };
     } catch (err) {
         console.error('🚨 sendCommandAndWaitAck error:', err.message);
