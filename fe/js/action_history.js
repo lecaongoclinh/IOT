@@ -65,14 +65,19 @@ function renderTable(data) {
       <td>${row.id}</td>
       <td>${row.deviceName || row.deviceId}</td>
       <td><div class="${actionClass}">${actionText}</div></td>
-      <td>${new Date(row.createdAt).toLocaleString()}</td>
+      <td>${formatDate(row.createdAt)}</td>
     `;
     tableBody.appendChild(tr);
   });
 
 
 }
-
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  const pad = n => n.toString().padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ` +
+         `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
 // Render pagination
 function renderPagination(current, total) {
   pagination.innerHTML = '';

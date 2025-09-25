@@ -3,6 +3,10 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import {SensorService} from './data_sensor.service'
 import { GetSensorDataDto } from './dto/get-sensor-data.dto';
 import { MqttService } from '../mqtt/mqtt.service';
+import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator';
+import { ApiOperation } from '@nestjs/swagger';
+
+@ApiTags('Data-sensor')
 @Controller()
 export class DataSensorController {
   private readonly logger = new Logger(DataSensorController.name);
@@ -42,6 +46,7 @@ export class DataSensorController {
         this.sensorService.saveSensorData(payload);
       });
     }
+  @ApiOperation({ summary: 'Lấy dữ liệu cảm biến' })
   @Get('sensor-data')
   async getSensorData(@Query() query: GetSensorDataDto) {
     return this.sensorService.getSensorData(query);
