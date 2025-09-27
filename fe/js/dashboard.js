@@ -248,11 +248,13 @@ document.querySelectorAll('.device-switch').forEach(switchEl => {
             }
           }, 500); // tốc độ chuyển frame (ms)
           card.classList.remove("loading");
+          spinner.style.display = "none"; // ẩn spinner
         } else {
           // khi tắt thì dừng animation và đổi sang ảnh off
           if (window.acInterval) clearInterval(window.acInterval);
           acIcon.innerHTML = `<img src="image/air_off.png" alt="AC Icon" width="64" height="64">`;
           card.classList.remove("loading");
+          spinner.style.display = "none"; // ẩn spinner
         }
       }
 

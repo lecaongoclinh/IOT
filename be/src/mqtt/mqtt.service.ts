@@ -9,7 +9,11 @@ export class MqttService implements OnModuleInit {
   public data$ = new Subject<any>();
 
   onModuleInit() {
-    this.client = connect('mqtt://172.20.10.3:1883', {
+    const brokerUrl = process.env.MQTT_BROKER_URL;
+    if (!brokerUrl) {
+      throw new Error('MQTT_BROKER_URL environment variable is not set');
+    }
+    this.client = connect(brokerUrl, {
       username: process.env.MQTT_USER,
       password: process.env.MQTT_PASS,
       clientId: 'nestjs-' + Math.random().toString(16).slice(2),

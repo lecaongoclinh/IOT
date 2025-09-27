@@ -1,0 +1,28 @@
+- Chạy mosquitto:
+ mosquitto -c "C:\Program Files\mosquitto\mosquitto.conf" -v
+Bài 2.1
+-Nhận dữ liệu:
+mosquitto_sub -h 172.20.10.3 -t esp32/data -u NgocLinh -P 123456789
+
+-Gửi dữ liệu:
+mosquitto_pub -h 172.20.10.3 -t esp32/data -u NgocLinh -P 123456789 -m '{"temperature":20,"humidity":60,"light":800}'
+
+-Gửi dữ liệu random 2s
+python esp32_data.py
+
+-Nhận lệnh điều khiển
+mosquitto_sub -h 172.20.10.3 -t esp32/control -u NgocLinh -P 123456789
+
+-Gửi lệnh điều khiển
+mosquitto_pub -h 172.20.10.3 -t esp32/control -u NgocLinh -P 123456789 -m '{"led1":"on"}'
+
+mosquitto_pub -h 172.20.10.3 -t esp32/control -u NgocLinh -P 123456789 -m '{"led2":"off"}'
+
+mosquitto_pub -h 172.20.10.3 -t esp32/control -u NgocLinh -P 123456789 -m '{"led3":"blink"}'
+
+
+Bài 2.2
+- Bật tắt led
+mosquitto_pub -h 172.20.10.3 -t esp32/control -m "{\"led1\":\"on\",\"led2\":\"blink\"}" -u NgocLinh -P 123456789
+- Nhận dữ liệu từ cảm biến
+ mosquitto_sub -h 172.20.10.3 -t esp32/data -u NgocLinh -P 123456789
