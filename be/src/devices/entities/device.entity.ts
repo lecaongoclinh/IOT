@@ -15,4 +15,7 @@ export class Device {
   // 1 device có nhiều action history
   @OneToMany(() => ActionHistory, (action) => action.device)
   actions: ActionHistory[];
+
+  @Column({ type: 'varchar', length: 10, default: 'off' })
+  status: string; // 'on' hoặc 'off'
 }

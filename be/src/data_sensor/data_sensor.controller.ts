@@ -42,7 +42,7 @@ export class DataSensorController {
   onModuleInit() {
       // Subscribe dữ liệu sensor từ MqttService
       this.mqttService.data$.subscribe((payload) => {
-        this.logger.log(`✅ MQTT data: ${JSON.stringify(payload)}`);
+        // this.logger.log(`✅ MQTT data: ${JSON.stringify(payload)}`);
         this.sensorService.saveSensorData(payload);
       });
     }

@@ -27,66 +27,73 @@ export class SensorService {
     const { search, filter, sort, limit, page } = dto;
 
     const qb: SelectQueryBuilder<SensorData> = this.sensorRepo.createQueryBuilder('s');
-  if (search && search.trim() !== '') {
-    const trimmed = search.trim();
 
-    // Regex patterns
-    const dateOnly = /^\d{4}-\d{2}-\d{2}$/;
-    const dateHour = /^\d{4}-\d{2}-\d{2} \d{2}$/;
-    const dateMinute = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
-    const dateSecond = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+  let orderColumn = 's.id';
+    if (search && search.trim() !== '') {
+      const trimmed = search.trim();
 
-    // 1. Nếu search là ngày/giờ
-    if (dateOnly.test(trimmed) || dateHour.test(trimmed) || dateMinute.test(trimmed) || dateSecond.test(trimmed)) {
-      let format = '%Y-%m-%d';
-      if (dateHour.test(trimmed)) format = '%Y-%m-%d %H';
-      else if (dateMinute.test(trimmed)) format = '%Y-%m-%d %H:%i';
-      else if (dateSecond.test(trimmed)) format = '%Y-%m-%d %H:%i:%s';
+      // Regex patterns
+      const dateOnly = /^\d{4}-\d{2}-\d{2}$/;
+      const dateHour = /^\d{4}-\d{2}-\d{2} \d{2}$/;
+      const dateMinute = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
+      const dateSecond = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+      if((filter === 'all' || filter === 'time') && (dateOnly.test(trimmed) || dateHour.test(trimmed) || dateMinute.test(trimmed) || dateSecond.test(trimmed))) {
+        // 1. Nếu search là ngày/giờ
+            let format = '%Y-%m-%d';
+            if (dateHour.test(trimmed)) format = '%Y-%m-%d %H';
+            else if (dateMinute.test(trimmed)) format = '%Y-%m-%d %H:%i';
+            else if (dateSecond.test(trimmed)) format = '%Y-%m-%d %H:%i:%s';
 
-      qb.andWhere(`DATE_FORMAT(s.created_at, '${format}') LIKE :dateStr`, {
-        dateStr: `${trimmed}%`,
-      });
-    } 
-    // 2. Nếu search là số
-    else if (!isNaN(parseFloat(trimmed))) {
-      const searchPrefix = `${trimmed}%`;
+            qb.andWhere(`DATE_FORMAT(s.created_at, '${format}') LIKE :dateStr`, {
+              dateStr: `${trimmed}%`,
+            });
+            orderColumn = 's.createdAt';
+        
+        }
+     else   {
+       // 2. Nếu search là số
+      if (!isNaN(parseFloat(trimmed))) {
+        const searchPrefix = `${trimmed}%`;
 
-      if (filter && ['temperature', 'humidity', 'light'].includes(filter)) {
-        // chỉ tìm trong đúng cột filter
-        qb.andWhere(`CAST(s.${filter} AS CHAR) LIKE :searchPrefix`, { searchPrefix });
-      } else {
-        // không filter thì tìm cả 3
+        if (filter && ['temperature', 'humidity', 'light', 'time'].includes(filter)) {
+          // chỉ tìm trong đúng cột filter
+          qb.andWhere(`CAST(s.${filter} AS CHAR) LIKE :searchPrefix`, { searchPrefix });
+          orderColumn = `s.${filter}`;
+        } else {
+          // không filter thì tìm cả 3
+          qb.andWhere(
+            `(CAST(s.temperature AS CHAR) LIKE :searchPrefix OR 
+              CAST(s.humidity AS CHAR) LIKE :searchPrefix OR 
+              CAST(s.light AS CHAR) LIKE :searchPrefix)`,
+            { searchPrefix }
+          );
+          orderColumn = '';
+        }
+      } 
+      // 3. Chuỗi khác
+      else {
+        const searchValue = `%${trimmed}%`;
         qb.andWhere(
-          `(CAST(s.temperature AS CHAR) LIKE :searchPrefix OR 
-            CAST(s.humidity AS CHAR) LIKE :searchPrefix OR 
-            CAST(s.light AS CHAR) LIKE :searchPrefix)`,
-          { searchPrefix }
+          `(CAST(s.temperature AS CHAR) LIKE :search OR 
+            CAST(s.humidity AS CHAR) LIKE :search OR 
+            CAST(s.light AS CHAR) LIKE :search OR 
+            DATE_FORMAT(s.created_at, '%Y-%m-%d %H:%i:%s') LIKE :search)`,
+          { search: searchValue }
         );
       }
-    } 
-    // 3. Chuỗi khác
-    else {
-      const searchValue = `%${trimmed}%`;
-      qb.andWhere(
-        `(CAST(s.temperature AS CHAR) LIKE :search OR 
-          CAST(s.humidity AS CHAR) LIKE :search OR 
-          CAST(s.light AS CHAR) LIKE :search OR 
-          DATE_FORMAT(s.created_at, '%Y-%m-%d %H:%i:%s') LIKE :search)`,
-        { search: searchValue }
-      );
-    }
+     }
 
-    console.log("🔍 Search input BE:", `"${trimmed}"`);
-    console.log("🔍 Generated SQL:", qb.getSql());
+    // console.log("🔍 Search input BE:", `"${trimmed}"`);
+    // console.log("🔍 Generated SQL:", qb.getSql());
   }
 
 
-  // Sort
-  let orderColumn = 's.id';
-  if (filter && ['temperature', 'humidity', 'light', 'time'].includes(filter)) {
-    orderColumn = filter === 'time' ? 's.createdAt' : `s.${filter}`;
-  }
-  let order: 'ASC' | 'DESC' = 'ASC';
+  // // Sort
+  // if (filter && ['temperature', 'humidity', 'light', 'time'].includes(filter)) {
+  //   orderColumn = filter === 'time' ? 's.createdAt' : `s.${filter}`;
+  // }
+  
+  let order: 'ASC' | 'DESC' = 'DESC';
   if (sort && ['asc', 'desc'].includes(sort.toLowerCase())) {
     order = sort.toUpperCase() as 'ASC' | 'DESC';
   }
@@ -113,5 +120,7 @@ export class SensorService {
       totalPages: Math.ceil(total / safeLimit),
     };
   }
+ 
+
 
 }

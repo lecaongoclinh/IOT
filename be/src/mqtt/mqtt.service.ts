@@ -39,7 +39,7 @@ export class MqttService implements OnModuleInit {
       }
     });
     this.client.on('message', (topic, payload) => {
-      console.log(`📥 [${topic}] ${payload.toString()}`);
+      // console.log(`📥 [${topic}] ${payload.toString()}`);
     });
   }
 

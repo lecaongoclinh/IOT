@@ -61,7 +61,7 @@ async getActionHistory(dto: GetActionHistoryDto) {
   // ----------------
   let orderColumn = 'h.id';
   if (filter === 'time' || filter === 'all') orderColumn = 'h.createdAt';
-  const order: 'ASC' | 'DESC' = sort && ['asc','desc'].includes(sort.toLowerCase()) ? sort.toUpperCase() as 'ASC'|'DESC' : 'ASC';
+  const order: 'ASC' | 'DESC' = sort && ['asc','desc'].includes(sort.toLowerCase()) ? sort.toUpperCase() as 'ASC'|'DESC' : 'DESC';
   qb.orderBy(orderColumn, order);
 
   // ----------------

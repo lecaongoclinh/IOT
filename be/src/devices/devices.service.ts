@@ -44,6 +44,11 @@ export class DevicesService {
         if (result.status === 'ok') {
             await this.historyRepo.save(history);
             console.log('💾 Action history saved after ACK:', history);
+
+            await this.deviceRepo.update(
+                { id: deviceId },
+                { status: action } // 'on' hoặc 'off'
+            );
         }
         return { success: result.status === 'ok', deviceId, action };
     } catch (err) {
@@ -81,6 +86,14 @@ export class DevicesService {
         this.mqttService.client.on('message', handler);
         this.mqttService.publish('esp32/control', payload);
     });
+}
+    async getAllDeviceStatus() {
+    // Lấy tất cả thiết bị từ repo
+    const devices = await this.deviceRepo.find(); 
+    return devices.map(device => ({
+        id: device.id,
+        status: device.status || 'off' 
+    }));
 }
 
 }
