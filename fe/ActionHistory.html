@@ -87,7 +87,7 @@
         <!-- Ô tìm kiếm -->
         <input type="text" id="searchInput" class="form-control" id="searchInput" placeholder="Nhập từ khóa..." style="max-width: 250px; color: #E91E63;">
 
-        <!-- Select loại dữ liệu -->
+      
        <!-- Select lọc thiết bị -->
       <select class="form-select custom-select me-2" id="filterSelect" style="max-width: 150px;" id="filterSelect">
         <option value="all" selected>Tất cả</option>
@@ -100,8 +100,8 @@
       <!-- Select sắp xếp -->
       <select class="form-select custom-select" id="sortSelect" style="max-width: 200px;" id="sortSelect">
         <option selected>Sắp xếp</option>
-        <option value="asc">Thời gian xa nhất</option>
-        <option value="desc">Thời gian gần nhất</option>
+        <option value="asc">Thời gian tăng dần</option>
+        <option value="desc">Thời gian giảm dần</option>
       </select>
 
 
@@ -111,6 +111,8 @@
         </button>
       </form>
     </div>
+
+       
 
     <!-- Table -->
     <div class="table-responsive" style="color: #E91E63;">
@@ -135,34 +137,35 @@
       </table>
     </div>
 
-    <!-- Footer -->
-    <div class="d-flex justify-content-between align-items-center mt-3">
-  <select class="form-select" id="limitSelect" style="max-width: 120px; color: #E91E63;">
-    <option value="5">5/trang</option>
-    <option value="10">10/trang</option>
-    <option value="20">20/trang</option>
-    <option value="30">30/trang</option>
-  </select>
-  <nav>
-    <ul class="pagination mb-0" style="--bs-pagination-hover-bg: #ffe5e5;" id="pagination">
-      <li class="page-item disabled">
-        <a class="page-link page-animate" href="#" style="color: #E91E63;">«</a>
-      </li>
-      <li class="page-item active">
-        <a class="page-link page-animate" href="#" style="background-color: #E91E63; border-color: #E91E63;">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link page-animate" href="#" style="color: #E91E63;">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link page-animate" href="#" style="color: #E91E63;">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link page-animate" href="#" style="color: #E91E63;">»</a>
-      </li>
-    </ul>
-  </nav>
-</div>
+ <!-- Footer -->
+    <div class="d-flex justify-content-end align-items-center mt-3" style="margin-bottom: 20px; gap: 10px;">
+      <select class="form-select" id="limitSelect" style="max-width: 150px; color: #E91E63;">
+        <option value="5">5 dòng/trang</option>
+        <option value="10">10 dòng/trang</option>
+        <option value="20">20 dòng/trang</option>
+        <option value="30">30 dòng/trang</option>
+      </select>
+      <nav>
+        <ul class="pagination mb-0" style="--bs-pagination-hover-bg: #ffe5e5;" id="pagination">
+          <li class="page-item disabled">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">«</a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link page-animate" href="#" style="background-color: #E91E63; border-color: #E91E63;">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">2</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">3</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link page-animate" href="#" style="color: #E91E63;">»</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+   
 
 
   </div>

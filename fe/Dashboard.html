@@ -50,19 +50,41 @@
     </ul>
   </div>
   
-  <div class="main-content" style="margin-top: 0px; gap: 0px;padding: 20px;">
-    <div class="row" style="margin-top: 0px; margin-bottom: 0px;">
-      <div class="col-md-4 mb-4">
+  <div class="main-content">
+    <div class="row" style="margin-top: 0px; margin-bottom: 0px; padding: 0px;">
+      <div class="col-md-4 mb-4" style="gap: 0px; margin-right: 0px;">
         <div class="card-metric d-flex align-items-center">
           <div class="text-content">
             <h1 class="mb-0" id="temperature">-- °C</h1>
-            <p>Nhiệt độ</p>
+            <p>Nhiệt độ (°C)</p>
           </div>
           <div class="ms-auto icon"><i id="temperature-icon" class="bi bi-thermometer-half"></i></div>
+        
+        </div>
+        
+      </div>
+
+      <div class="col-md-4 mb-4" style="gap: 0px; margin-right: 0px;">
+        <div class="card-metric d-flex align-items-center">
+          <div class="text-content">
+            <h1 class="mb-0" id="humidity">-- %</h1>
+            <p>Độ ẩm (%)</p>
+          </div>
+          <div class="ms-auto icon"><i id="humidity-icon" class="bi bi-droplet"></i></div>
         </div>
       </div>
 
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4" style="gap: 0px; margin-right: 0px;">
+        <div class="card-metric d-flex align-items-center">
+          <div class="text-content">
+            <h1 class="mb-0" id="light"> -- Lux</h1>
+            <p>Ánh sáng (Lux)</p>
+          </div>
+          <div class="ms-auto icon"><i id="light-icon" class="bi bi-brightness-low"></i></div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-3 mb-4" style="gap: 0px; margin-right: 0px;">
         <div class="card-metric d-flex align-items-center">
           <div class="text-content">
             <h1 class="mb-0" id="humidity">-- %</h1>
@@ -70,17 +92,7 @@
           </div>
           <div class="ms-auto icon"><i id="humidity-icon" class="bi bi-droplet"></i></div>
         </div>
-      </div>
-
-      <div class="col-md-4 mb-4">
-        <div class="card-metric d-flex align-items-center">
-          <div class="text-content">
-            <h1 class="mb-0" id="light">-- lux</h1>
-            <p>Ánh sáng</p>
-          </div>
-          <div class="ms-auto icon"><i id="light-icon" class="bi bi-brightness-low"></i></div>
-        </div>
-      </div>
+      </div> -->
     </div>
 
     
@@ -93,7 +105,7 @@
       </div>
    
       
-      <div class="col-md-3 mb-4">
+      <div class="col-md-3 mb-4" style="">
        <div class="control-card" data-id="1">
         
             <div class="control-card-icon">
@@ -104,6 +116,9 @@
                 <div class="form-check form-switch">
                     <input class="form-check-input device-switch" type="checkbox" role="switch" id="lightSwitch" style="width: 4rem; height: 2rem;">
                 </div>
+            </div>
+           <div class="spinner-overlay">
+              <div iv class="spinner-border text-primary" role="status"></div>
             </div>
         </div>
 
@@ -124,6 +139,9 @@
                     <input class="form-check-input device-switch" type="checkbox" role="switch" id="acSwitch" style="width: 4rem; height: 2rem;">
                 </div>
             </div>
+            <div class="spinner-overlay">
+              <div class="spinner-border text-primary" role="status"></div>
+            </div>
         </div> 
         <div class="control-card" data-id="3">
             <div class="control-card-icon">
@@ -139,8 +157,29 @@
                     </div>
                 </div>
             </div>
-          
+            <div class="spinner-overlay">
+              <div class="spinner-border text-primary" role="status"></div>
+            </div>
         </div>
+
+        <!-- <div class="control-card" data-id="3">
+            <div class="control-card-icon">
+                <div class="fan-wrapper" id="fanWrapper">
+                  <i id="fanIcon" class="fa-solid fa-fan fan-icon"></i>
+                </div>
+            </div>
+            <div class="control-card-content">
+                <h5>Quạt</h5>
+                <div class="d-flex justify-content-center">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input device-switch" type="checkbox" role="switch" id="fanSwitch" style="width: 4rem; height: 2rem;">
+                    </div>
+                </div>
+            </div>
+            <div class="spinner-overlay">
+              <div class="spinner-border text-primary" role="status"></div>
+            </div>
+        </div> -->
       </div> 
     </div>
   </div>

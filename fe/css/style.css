@@ -298,21 +298,22 @@
     .main-content {
       margin-left: 160px;
       flex-grow: 1;
-      padding: 30px;
+      padding: 20px;
       color: var(--text-color);
     }
     
     .card-metric {
       background-color: #FFFFFF;
-      padding: 20px;
+      padding: 15px;
       border-radius: 15px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
       border: none;
       display: flex;
       align-items: center;
-      width: 300px;
-      margin-right: 0 px;
+      max-width: 300px;
+      margin-right: 0px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
     }
     
     .card-metric:hover {
@@ -330,7 +331,7 @@
     }
     
     .card-metric .text-content {
-      margin-left: 20px;
+      margin-left: 5px;
     }
 
     /* Biểu đồ */
@@ -360,6 +361,7 @@
   display: flex; /* Makes the card's children align horizontally */
   align-items: center; /* Vertically aligns the icon and content */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 .control-card:hover {
   transform: scale(1.02); /* phóng to nhẹ */
@@ -495,4 +497,40 @@ option {
 @keyframes windEffect {
   from { transform: translateX(0); }
   to   { transform: translateX(5px); }
+}
+
+/* loading  */
+.control-card.loading {
+  opacity: 0.5; /* làm mờ */
+  pointer-events: none; /* không cho bấm khi đang loading */
+  
+}
+
+.control-card .spinner-overlay {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.control-card.loading .spinner-overlay {
+  display: block;
+}
+
+/* loading */
+.card-metric.loading .spinner-overlay {
+  display: block;
+}
+
+.card-metric.loading {
+  opacity: 0.5; /* làm mờ */
+  pointer-events: none; /* không cho bấm khi đang loading */
+}
+.card-metric.spinner-overlay {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

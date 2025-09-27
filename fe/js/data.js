@@ -45,18 +45,14 @@ filterSelect.addEventListener('change', () => {
 // Fetch dữ liệu
 async function fetchSensorData(page = 1) {
   currentPage = page; // ✅ Update currentPage global
-
   const search = searchInput.value;
   const filter = filterSelect.value;
   const sort = sortSelect.value;
   const limit = limitSelect.value;
-
   const url = new URL('http://localhost:3000/sensor-data');
   url.search = new URLSearchParams({ search, filter, sort, limit, page }).toString();
-
   const res = await fetch(url);
   const data = await res.json();
-
   renderTable(data.data);
   renderPagination(currentPage, data.totalPages);
 }
@@ -78,9 +74,9 @@ function renderTable(data) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row.id}</td>
-      <td>${row.temperature}°C</td>
-      <td>${row.humidity}%</td>
-      <td>${row.light} Lux</td>
+      <td>${row.temperature}</td>
+      <td>${row.humidity}</td>
+      <td>${row.light}</td>
       <td>${formatDate(row.createdAt)}</td>
     `;
     tableBody.appendChild(tr);
@@ -181,3 +177,24 @@ applyBtn.addEventListener('click', e => {
   e.preventDefault();
   fetchSensorData(1);
 });
+
+
+
+
+//copy
+  document.getElementById("sensorTable").addEventListener("click", function (e) {
+    if (e.target && e.target.tagName === "TD") {
+      const text = e.target.innerText.trim();
+
+      // Copy vào clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        console.log("Copied:", text);
+
+        // Hiệu ứng báo copy thành công
+        e.target.style.backgroundColor = "#d4edda";
+        setTimeout(() => {
+          e.target.style.backgroundColor = "";
+        }, 500);
+      });
+    }
+  });

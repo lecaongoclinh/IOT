@@ -167,3 +167,22 @@ applyBtn.addEventListener('click', e => {
   e.preventDefault();
   fetchActionHistory(1);
 });
+
+
+//copy
+  document.getElementById("actionTable").addEventListener("click", function (e) {
+    if (e.target && e.target.tagName === "TD") {
+      const text = e.target.innerText.trim();
+
+      // Copy vào clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        console.log("Copied:", text);
+
+        // Hiệu ứng báo copy thành công
+        e.target.style.backgroundColor = "#d4edda";
+        setTimeout(() => {
+          e.target.style.backgroundColor = "";
+        }, 500);
+      });
+    }
+  });

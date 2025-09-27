@@ -110,20 +110,21 @@
 
         <!-- Nút áp dụng -->
         <button class="btn btn-apply ms-2" id="applyBtn" type="submit" style="background-color: #E91E63; color: white;">
-          Áp dụng
+          <i class="bi bi-search"></i>
         </button>
       </form>
     </div>
 
+     
     <!-- Table -->
     <div class="table-responsive" id="sensorTable">
       <table class="table table-bordered text-center" style="color: #E91E63;">
         <thead style="color: #E91E63;">
           <tr>
             <th>ID</th>
-            <th>Nhiệt độ</th>
-            <th>Độ ẩm</th>
-            <th>Ánh sáng</th>
+            <th>Nhiệt độ (°C)</th>
+            <th>Độ ẩm (%)</th>
+            <th>Ánh sáng (Lux)</th>
             <th>Thời gian</th>
           </tr>
         </thead>
@@ -140,13 +141,16 @@
     </div>
 
     <!-- Footer -->
-   <div class="d-flex justify-content-between align-items-center mt-3">
-      <select class="form-select" id="limitSelect" style="max-width: 120px; color: #E91E63;">
-        <option value="5">5/trang</option>
-        <option value="10">10/trang</option>
-        <option value="20">20/trang</option>
-        <option value="30">30/trang</option>
-      </select>
+   <div class="d-flex justify-content-end align-items-center mt-3" style="margin-bottom: 20px; gap: 10px;" >
+     <div class="d-flex align-items-center" >
+        <select class="form-select" id="limitSelect" style="max-width: 150px; color: #E91E63;">
+          <option value="5">5 dòng/trang</option>
+          <option value="10">10 dòng/trang</option>
+          <option value="20">20 dòng/trang</option>
+          <option value="30">30 dòng/trang</option>
+        </select>
+      </div>  
+
       <nav>
         <ul class="pagination mb-0" style="--bs-pagination-hover-bg: #ffe5e5;" id="pagination">
           <li class="page-item disabled">
@@ -167,6 +171,7 @@
         </ul>
       </nav>
     </div>
+    
   </div>
 </div>
 
