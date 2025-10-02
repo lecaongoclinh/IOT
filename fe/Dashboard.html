@@ -13,7 +13,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
-   
+   .unit {
+  font-size: 18px;      /* nhỏ hơn số */
+  margin-left: 4px;     /* cách một chút */
+
+}
   </style>
 </head>
 <body>
@@ -55,8 +59,12 @@
       <div class="col-md-4 mb-4" style="gap: 0px; margin-right: 0px;">
         <div class="card-metric d-flex align-items-center">
           <div class="text-content">
-            <h1 class="mb-0" id="temperature">-- °C</h1>
-            <p>Nhiệt độ (°C)</p>
+            <!-- <h1 class="mb-0" id="temperature">29 <span class="unit">°C</span></h1> -->
+             <div class="d-flex align-items-baseline">
+              <h1 class="mb-0" id="temperature">29</h1>
+              <span class="unit">°C</span>
+            </div>
+            <p>Nhiệt độ</p>
           </div>
           <div class="ms-auto icon"><i id="temperature-icon" class="bi bi-thermometer-half"></i></div>
         
@@ -67,8 +75,11 @@
       <div class="col-md-4 mb-4" style="gap: 0px; margin-right: 0px;">
         <div class="card-metric d-flex align-items-center">
           <div class="text-content">
-            <h1 class="mb-0" id="humidity">-- %</h1>
-            <p>Độ ẩm (%)</p>
+            <div class="d-flex align-items-baseline">
+              <h1 class="mb-0" id="humidity">80</h1>
+              <span class="unit">%</span>
+            </div>
+            <p>Độ ẩm</p>
           </div>
           <div class="ms-auto icon"><i id="humidity-icon" class="bi bi-droplet"></i></div>
         </div>
@@ -77,8 +88,11 @@
       <div class="col-md-4 mb-4" style="gap: 0px; margin-right: 0px;">
         <div class="card-metric d-flex align-items-center">
           <div class="text-content">
-            <h1 class="mb-0" id="light"> -- Lux</h1>
-            <p>Ánh sáng (Lux)</p>
+            <div class="d-flex align-items-baseline">
+              <h1 class="mb-0" id="light">700</h1>
+              <span class="unit">Lux</span>
+            </div>
+            <p>Ánh sáng</p>
           </div>
           <div class="ms-auto icon"><i id="light-icon" class="bi bi-brightness-low"></i></div>
         </div>
@@ -108,7 +122,7 @@
       <div class="col-md-3 mb-4">
        <div class="control-card" data-id="1">
         
-            <div class="control-card-icon">
+            <div class="control-card-icon" id="light-icon">
               <i class="bi bi-lightbulb-off"></i>
             </div>
             <div class="control-card-content">

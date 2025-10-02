@@ -233,19 +233,21 @@ void loop() {
 
   
   static unsigned long lastSend = 0;
-  if (millis() - lastSend >5000) {
+  if (millis() - lastSend > 3000) {
     float h = dht.readHumidity();
     float t = dht.readTemperature();
     int ldrValue = analogRead(LDR_PIN);
+    int invertedAdc = 4095 - ldrValue;
+    float luxValue = adcToLux(invertedAdc);
     Serial.print("Humidity: "); Serial.println(h);
     Serial.print("Temperature: "); Serial.println(t);
-    Serial.print("Light: "); Serial.println(ldrValue);
+    Serial.print("Light: "); Serial.println(luxValue);
 
     if (!isnan(h) && !isnan(t)) {
         StaticJsonDocument<256> doc;
         doc["temperature"] = t;
         doc["humidity"] = h;
-        doc["light"] = ldrValue;
+        doc["light"] = luxValue;
 
         char buffer[256];
         size_t n = serializeJson(doc, buffer);
@@ -255,4 +257,26 @@ void loop() {
     }
     lastSend = millis();
   }
+}
+
+#define VCC 3.3
+#define ADC_RESOLUTION 4095.0
+#define R_FIXED 10000.0
+
+// Các hằng số hiệu chuẩn (cần điều chỉnh theo LDR thực tế)
+float GAMMA = 0.8;
+float A = 500000.0;  // hệ số, sẽ thay đổi khi bạn hiệu chuẩn
+
+float adcToLux(int adcValue) {
+  // Bước 1: tính điện áp
+  float Vout = (adcValue / ADC_RESOLUTION) * VCC;
+
+  // Bước 2: tính điện trở LDR
+  float Rldr = (R_FIXED * (VCC - Vout)) / Vout;
+
+  // Bước 3: tính Lux theo công thức log-log
+  float lux = pow((A / Rldr), (1.0 / GAMMA));
+  lux = round(lux * 10.0) / 10.0;
+
+  return lux;
 }

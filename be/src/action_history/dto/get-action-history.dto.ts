@@ -4,9 +4,9 @@ import { ApiPropertyOptional } from '@nestjs/swagger/dist/decorators/api-propert
 
 export class GetActionHistoryDto {
   @ApiPropertyOptional({
-    description: 'Tìm kiếm theo thời gian',
+    description: 'Tìm kiếm theo thời gian. (VD: 2025-09-25 23:28)',
+
     example: '2025-09-25 23:28',
-    default: '2025-09-25 23:28',
   })
   @IsOptional()
   @IsString()

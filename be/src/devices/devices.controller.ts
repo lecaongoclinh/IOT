@@ -43,7 +43,7 @@ export class DevicesController {
     }
 
     @Post('status')
-    @ApiOperation({ summary: 'Lấy trạng thái của thiết bị' })
+    @ApiOperation({ summary: 'Lấy trạng thái của tất cả thiết bị' })
     async getAllDeviceStatus() {
         try {
             return await this.devicesService.getAllDeviceStatus();

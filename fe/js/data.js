@@ -49,7 +49,7 @@ async function fetchSensorData(page = 1) {
   const filter = filterSelect.value;
   const sort = sortSelect.value;
   const limit = limitSelect.value;
-  const url = new URL('http://localhost:3000/sensor-data');
+  const url = new URL('http://localhost:3000/data-sensor');
   url.search = new URLSearchParams({ search, filter, sort, limit, page }).toString();
   const res = await fetch(url);
   const data = await res.json();
@@ -192,9 +192,40 @@ applyBtn.addEventListener('click', e => {
 
         // Hiệu ứng báo copy thành công
         e.target.style.backgroundColor = "#d4edda";
+        copyNotification.style.display = 'block';
         setTimeout(() => {
+          copyNotification.style.display = 'none';
           e.target.style.backgroundColor = "";
-        }, 500);
+        }, 1000);
       });
     }
   });
+
+const copyNotification = document.createElement('div');
+copyNotification.id = 'copyNotification';
+copyNotification.style.position = 'fixed';
+copyNotification.style.top = '50%';
+copyNotification.style.left = '50%';
+copyNotification.style.transform = 'translate(-50%, -50%)';
+copyNotification.style.background = '#E91E63';
+copyNotification.style.color = '#fff';
+copyNotification.style.padding = '10px 20px';
+copyNotification.style.borderRadius = '5px';
+copyNotification.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+copyNotification.style.zIndex = '9999';
+copyNotification.style.display = 'none';
+copyNotification.innerText = 'Đã copy vào clipboard! Double click vào ô tìm kiếm để paste';
+document.body.appendChild(copyNotification);
+
+searchInput.addEventListener('dblclick', async function () {
+  try {
+    const text = await navigator.clipboard.readText();
+    if (text) {
+      searchInput.value = text;
+      // Tự động trigger tìm kiếm nếu muốn
+      fetchSensorData(1);
+    }
+  } catch (err) {
+    console.error('Không thể paste từ clipboard:', err);
+  }
+});

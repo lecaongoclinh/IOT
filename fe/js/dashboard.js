@@ -108,7 +108,7 @@ function flashText(id) {
   void el.offsetWidth; // trick restart animation
   el.classList.add("flash");
 }
-showLoading();
+// showLoading();
 socket.on("connect", () => {
   console.log("✅ Connected to WebSocket server");
 });
@@ -262,10 +262,13 @@ document.querySelectorAll('.device-switch').forEach(switchEl => {
       } else {
         alert(`❌ ESP32 không phản hồi hoặc lỗi khi điều khiển thiết bị ${deviceId}`);
         card.classList.remove("loading");
+        spinner.style.display = "none";
       }
     } catch (err) {
       console.error(err);
       alert("🚨 Lỗi kết nối server!");
+      card.classList.remove("loading");
+      spinner.style.display = "none";
     }
   });
 });
@@ -291,6 +294,7 @@ async function fetchDevicesStatus(){
       // Cập nhật trạng thái switch
       switchEl.checked = (status === 'on'); 
       if (deviceId === '1') {
+        const lightIcon = document.getElementById('light-icon');
           if (status === 'on') {
             icon.classList.remove('bi-lightbulb-off');
             icon.classList.add('bi-lightbulb');
@@ -337,6 +341,7 @@ async function fetchDevicesStatus(){
             }
           }, 500); // tốc độ chuyển frame (ms)
           card.classList.remove("loading");
+          spinner.style.display = "none"; 
         } else {
           // khi tắt thì dừng animation và đổi sang ảnh off
           if (window.acInterval) clearInterval(window.acInterval);
@@ -349,6 +354,7 @@ async function fetchDevicesStatus(){
   } catch(err){
     console.error(err);
     alert("🚨 Lỗi kết nối server!");
+
   }
 }
 

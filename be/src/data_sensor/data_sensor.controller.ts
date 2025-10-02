@@ -47,7 +47,7 @@ export class DataSensorController {
       });
     }
   @ApiOperation({ summary: 'Lấy dữ liệu cảm biến' })
-  @Get('sensor-data')
+  @Get('data-sensor')
   async getSensorData(@Query() query: GetSensorDataDto) {
     return this.sensorService.getSensorData(query);
   }
